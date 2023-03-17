@@ -1,126 +1,303 @@
 <!DOCTYPE html>
 <html lang="en" class="h-100">
-    <head>
-        <meta charset="UTF-8">
-        <title>3 Person Chess Clock</title>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-        <style>
-            body {
-                height: 100%;
-            }
+<head>
+    <meta charset="UTF-8">
+    <title>3 Person Chess Clock</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <style>
+        body {
+            height: 100%;
+        }
 
-            .ct-timer-card {
-                padding-top: 5rem;
-                padding-bottom: 5rem;
-                margin-left: 40px;
-                margin-right: 40px;
-                text-align: center;
-            }
+        .ct-timer-card {
+            background-color: #dbdbdb;
+            padding-top: 5rem;
+            padding-bottom: 5rem;
+            margin-left: 40px;
+            margin-right: 40px;
+            text-align: center;
+        }
 
-            .ct-timer {
-                font-size: 10rem;
-                font-weight: bold;
-            }
+        .ct-timer {
+            font-size: 10rem;
+            font-weight: bold;
+        }
 
-            .ct-label {
-                color: white;
-                font-size: 3rem;
-                padding-left: 40px;
-                margin-bottom: 10px;
-            }
+        .ct-label {
+            color: white;
+            font-size: 3rem;
+            padding-left: 40px;
+            margin-bottom: 10px;
+        }
 
-            .col {
-                margin-top: 40px;
-                text-align: left;
-            }
+        .col {
+            margin-top: 40px;
+            text-align: left;
+        }
 
-            .ct-buttons {
-                font-size: 5rem;
-                padding-left: 2rem;
-                padding-right: 2rem;
-                border-radius: 25px;
-            }
+        .ct-buttons {
+            font-size: 4rem;
+            padding-left: 2rem;
+            padding-right: 2rem;
+            border-radius: 25px;
+        }
 
-            .modal {
-            }
-        </style>
-    </head>
-    <body>
-        <div class="text-center h-100 bg-dark">
-            <div class="row">
-                <div class="col">
-                    <span class="ct-label" id="player-1-label">Player 1:</span>
-                    <div class="card ct-timer-card">
-                        <div class="card-body">
-                            <span class="ct-timer">00:00</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col">
-                    <span class="ct-label" id="player-2-label">Player 2:</span>
-                    <div class="card ct-timer-card">
-                        <div class="card-body">
-                            <span class="ct-timer">00:00</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col">
-                    <span class="ct-label" id="player-3-label">Player 3:</span>
-                    <div class="card ct-timer-card">
-                        <div class="card-body">
-                            <span class="ct-timer">00:00</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row mt-5">
-                <div class="col-6 text-center">
-                    <button class="btn btn-primary ct-buttons" id="btn-set-clock">Set Clock</button>
-                </div>
-                <div class="col-6 text-center">
-                    <button class="btn btn-secondary ct-buttons" id="btn-settings">Settings</button>
-                </div>
-            </div>
-            <div class="modal fade" id="settingModal" tabindex="-1" aria-labelledby="settingModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="settingModalLabel">Settings</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="mb-3">
-                                <label for="player-1-name" class="form-label">Player 1 Label:</label>
-                                <input type="text" class="form-control" id="player-1-name" placeholder="Player 1">
-                            </div>
-                            <div class="mb-3">
-                                <label for="player-2-name" class="form-label">Player 2 Label:</label>
-                                <input type="text" class="form-control" id="player-2-name" placeholder="Player 2">
-                            </div>
-                            <div class="mb-3">
-                                <label for="player-3-name" class="form-label">Player 3 Label:</label>
-                                <input type="text" class="form-control" id="player-3-name" placeholder="Player 3">
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-primary">Save changes</button>
-                        </div>
-                    </div>
+        .modal {
+            font-size: 3rem;
+            text-align: left;
+        }
+
+        input {
+            font-size: 3rem !important;
+        }
+
+        .modal-title {
+            font-size: 2rem !important;
+        }
+
+        .ct-active {
+            background-color: #62cb05;
+        }
+
+        .ct-timeout {
+            background-color: #b70000;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+<div class="text-center h-100 bg-dark">
+    <div class="row">
+        <div class="col">
+            <span class="ct-label" id="player-1-label">Player 1:</span>
+            <div class="card ct-timer-card" id="player-1-card">
+                <div class="card-body">
+                    <span class="ct-timer" id="player-1-time">00:00</span>
                 </div>
             </div>
         </div>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-        <script>
-            const settingsModal = new bootstrap.Modal(document.getElementById('settingModal'));
+    </div>
+    <div class="row">
+        <div class="col">
+            <span class="ct-label" id="player-2-label">Player 2:</span>
+            <div class="card ct-timer-card" id="player-2-card">
+                <div class="card-body">
+                    <span class="ct-timer" id="player-2-time">00:00</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <span class="ct-label" id="player-3-label">Player 3:</span>
+            <div class="card ct-timer-card" id="player-3-card">
+                <div class="card-body">
+                    <span class="ct-timer" id="player-3-time">00:00</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-5">
+        <div class="col-6 text-center">
+            <button class="btn btn-primary ct-buttons" id="btn-pause">Pause</button>
+        </div>
+        <div class="col-6 text-center">
+            <button class="btn btn-secondary ct-buttons" id="btn-settings">Settings</button>
+        </div>
+    </div>
+    <div class="modal fade" id="settingModal" tabindex="-1" aria-labelledby="settingModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-fullscreen">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="settingModalLabel">Settings</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-4">
+                        <label for="player-1-name" class="form-label">Player 1 Label:</label>
+                        <input type="text" class="form-control" id="player-1-name" placeholder="Player 1">
+                    </div>
+                    <div class="mb-4">
+                        <label for="player-2-name" class="form-label">Player 2 Label:</label>
+                        <input type="text" class="form-control" id="player-2-name" placeholder="Player 2">
+                    </div>
+                    <div class="mb-4">
+                        <label for="player-3-name" class="form-label">Player 3 Label:</label>
+                        <input type="text" class="form-control" id="player-3-name" placeholder="Player 3">
+                    </div>
+                    <hr>
+                    <div class="mb-4">
+                        <label for="timer-minutes" class="form-label">Timer Minutes:</label>
+                        <input type="text" class="form-control" id="timer-minutes" placeholder="10">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary ct-buttons" id="save-settings">Save Settings</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"
+        integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+    var timer = {
+        1: {
+            label: "Player 1",
+            time: {
+                minutes: 10,
+                seconds: 0
+            },
+            status: "none"
+        },
+        2: {
+            label: "Player 2",
+            time: {
+                minutes: 10,
+                seconds: 0
+            },
+            status: "none"
+        },
+        3: {
+            label: "Player 3",
+            time: {
+                minutes: 10,
+                seconds: 0
+            },
+            status: "none"
+        }
+    };
+    var currentPlayer = 0;
+</script>
+<script>
+    function fullUpdate(playerNumber) {
+        $('#player-' + playerNumber + '-label')[0].innerText = timer[playerNumber].label;
+        updateTime(playerNumber);
+        updateStatus(playerNumber);
+    }
 
-            $('#btn-settings').on('click', function () {
-                settingsModal.show();
-            })
-        </script>
-    </body>
+    function updateTime(playerNumber) {
+        $('#player-' + playerNumber + '-time')[0].innerText = timer[playerNumber].time.minutes + ':' + ('0' + timer[playerNumber].time.seconds).slice(-2);
+    }
+
+    function updateStatus(playerNumber) {
+        let card = $('#player-' + playerNumber + '-card');
+        if (timer[playerNumber].status === 'none') {
+            card[0].classList.remove('ct-active');
+            card[0].classList.remove('ct-timeout');
+        } else if (timer[playerNumber].status === 'active') {
+            card[0].classList.remove('ct-timeout');
+            card[0].classList.add('ct-active');
+        } else if (timer[playerNumber].status === 'timeout') {
+            card[0].classList.remove('ct-active');
+            card[0].classList.add('ct-timeout');
+        }
+    }
+
+    function setCurrentPlayer(playerNumber) {
+        currentPlayer = playerNumber;
+        for (let i = 1; i < 4; i++) {
+            if (i !== currentPlayer) {
+                timer[i].status = "none";
+                updateStatus(i);
+            } else {
+                timer[currentPlayer].status = "active";
+                updateStatus(currentPlayer);
+            }
+        }
+    }
+
+    function runTick() {
+        if (currentPlayer > 0) {
+            if (timer[currentPlayer].time.seconds > 0) {
+                timer[currentPlayer].time.seconds -= 1;
+                updateTime(currentPlayer);
+            } else if (timer[currentPlayer].time.minutes > 0) {
+                timer[currentPlayer].time.minutes -= 1;
+                timer[currentPlayer].time.seconds = 59;
+                updateTime(currentPlayer);
+            } else {
+                timer[currentPlayer].status = "timeout";
+                updateStatus(currentPlayer);
+                currentPlayer = 0;
+            }
+        }
+    }
+
+    function saveSettings() {
+        for (let i = 1; i < 4; i++) {
+            // Label
+            let name = $('#player-' + i + '-name').val();
+            if (name.trim().length < 1) {
+                name = "Player " + i;
+            }
+            timer[i].label = name;
+
+            // Clock
+            let minutes = $('#timer-minutes').val();
+            if (minutes.trim().length < 1) {
+                minutes = 10;
+            }
+            timer[i].time.minutes = minutes;
+            timer[i].time.seconds = 0;
+
+            fullUpdate(i);
+        }
+
+        settingsModal.hide();
+    }
+</script>
+<script>
+    // Initialise Board
+    for (let i = 1; i < 4; i++) {
+        fullUpdate(i);
+    }
+
+    // Settings Functionality
+    const settingsModal = new bootstrap.Modal(document.getElementById('settingModal'));
+
+    $('#btn-settings').on('click', function () {
+        settingsModal.show();
+    });
+
+    $('#save-settings').on('click', function () {
+        saveSettings();
+    });
+
+    // Timer Functionality
+    $('.ct-timer-card').on('click', function () {
+        let clickedCard = parseInt(this.id.slice(-6, -5));
+
+        if (currentPlayer === clickedCard) {
+            if (currentPlayer === 3) {
+                currentPlayer = 1;
+            } else {
+                currentPlayer += 1;
+            }
+        }
+
+        if (currentPlayer === 0) {
+            currentPlayer = clickedCard;
+        }
+
+        setCurrentPlayer(currentPlayer);
+    })
+
+    $('#btn-pause').on('click', function () {
+        timer[currentPlayer].status = "none";
+        currentPlayer = 0;
+
+        for (let i = 1; i < 4; i++) {
+            fullUpdate(i);
+        }
+    })
+
+    var timerObj = setInterval(runTick, 1000);
+</script>
+</body>
 </html>
