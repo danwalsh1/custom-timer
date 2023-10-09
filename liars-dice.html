@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Liars Dice - Call Sheet</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <style>
+        .ld-btn-add-call {
+            font-size: 0.75rem;
+        }
+
+        .ld-border-left {
+            border-left: 1px solid black;
+        }
+
+        #ld-calls {
+            font-size: 0.85rem;
+        }
+
+        .ld-add-call-btn-step-one {
+            margin-top: 1rem;
+            width: 100%;
+        }
+
+        .ld-add-call-btn-step-two {
+            margin-top: 1rem;
+            width: 100%;
+        }
+
+        .ld-taken {
+            background-color: #ffcccc;
+            text-decoration: line-through;
+            color: #2f2f2f;
+        }
+    </style>
+</head>
+<body>
+    <div class="ld-content">
+        <div class="row mt-2">
+            <div class="col-4"></div>
+            <div class="col-4 text-center">
+                <h3 class="ld-title">Liars Dice</h3>
+            </div>
+            <div class="col-4 text-center px-4">
+                <button class="ld-btn-add-call btn btn-primary w-100 h-100" type="button" onclick="addCall()" id="ld-add-call-btn">Add Call</button>
+                <button class="ld-btn-add-call btn btn-danger w-100 h-100 d-none" type="button" onclick="cancelCall()" id="ld-cancel-call-btn">Cancel</button>
+            </div>
+        </div>
+        <div class="row text-center mt-4" id="ld-calls">
+            <div class="col-2">
+                1's<br>
+                <span id="ld-1-1">1 x 1</span><br>
+                <span id="ld-2-1">2 x 1</span><br>
+                <span id="ld-3-1">3 x 1</span><br>
+                <span id="ld-4-1">4 x 1</span><br>
+                <span id="ld-5-1">5 x 1</span><br>
+                <span id="ld-6-1">6 x 1</span><br>
+                <span id="ld-7-1">7 x 1</span><br>
+                <span id="ld-8-1">8 x 1</span><br>
+                <span id="ld-9-1">9 x 1</span><br>
+                <span id="ld-10-1">10 x 1</span><br>
+                <span id="ld-11-1">11 x 1</span><br>
+                <span id="ld-12-1">12 x 1</span><br>
+                <span id="ld-13-1">13 x 1</span><br>
+                <span id="ld-14-1">14 x 1</span><br>
+                <span id="ld-15-1">15 x 1</span><br>
+                <span id="ld-16-1">16 x 1</span><br>
+                <span id="ld-17-1">17 x 1</span><br>
+                <span id="ld-18-1">18 x 1</span><br>
+                <span id="ld-19-1">19 x 1</span><br>
+                <span id="ld-20-1">20 x 1</span><br>
+            </div>
+            <div class="col-2 ld-border-left">
+                2's<br>
+                <span id="ld-1-2">1 x 2</span><br>
+                <span id="ld-2-2">2 x 2</span><br>
+                <span id="ld-3-2">3 x 2</span><br>
+                <span id="ld-4-2">4 x 2</span><br>
+                <span id="ld-5-2">5 x 2</span><br>
+                <span id="ld-6-2">6 x 2</span><br>
+                <span id="ld-7-2">7 x 2</span><br>
+                <span id="ld-8-2">8 x 2</span><br>
+                <span id="ld-9-2">9 x 2</span><br>
+                <span id="ld-10-2">10 x 2</span><br>
+                <span id="ld-11-2">11 x 2</span><br>
+                <span id="ld-12-2">12 x 2</span><br>
+                <span id="ld-13-2">13 x 2</span><br>
+                <span id="ld-14-2">14 x 2</span><br>
+                <span id="ld-15-2">15 x 2</span><br>
+                <span id="ld-16-2">16 x 2</span><br>
+                <span id="ld-17-2">17 x 2</span><br>
+                <span id="ld-18-2">18 x 2</span><br>
+                <span id="ld-19-2">19 x 2</span><br>
+                <span id="ld-20-2">20 x 2</span><br>
+            </div>
+            <div class="col-2 ld-border-left">
+                3's<br>
+                <span id="ld-1-3">1 x 3</span><br>
+                <span id="ld-2-3">2 x 3</span><br>
+                <span id="ld-3-3">3 x 3</span><br>
+                <span id="ld-4-3">4 x 3</span><br>
+                <span id="ld-5-3">5 x 3</span><br>
+                <span id="ld-6-3">6 x 3</span><br>
+                <span id="ld-7-3">7 x 3</span><br>
+                <span id="ld-8-3">8 x 3</span><br>
+                <span id="ld-9-3">9 x 3</span><br>
+                <span id="ld-10-3">10 x 3</span><br>
+                <span id="ld-11-3">11 x 3</span><br>
+                <span id="ld-12-3">12 x 3</span><br>
+                <span id="ld-13-3">13 x 3</span><br>
+                <span id="ld-14-3">14 x 3</span><br>
+                <span id="ld-15-3">15 x 3</span><br>
+                <span id="ld-16-3">16 x 3</span><br>
+                <span id="ld-17-3">17 x 3</span><br>
+                <span id="ld-18-3">18 x 3</span><br>
+                <span id="ld-19-3">19 x 3</span><br>
+                <span id="ld-20-3">20 x 3</span><br>
+            </div>
+            <div class="col-2 ld-border-left">
+                4's<br>
+                <span id="ld-1-4">1 x 4</span><br>
+                <span id="ld-2-4">2 x 4</span><br>
+                <span id="ld-3-4">3 x 4</span><br>
+                <span id="ld-4-4">4 x 4</span><br>
+                <span id="ld-5-4">5 x 4</span><br>
+                <span id="ld-6-4">6 x 4</span><br>
+                <span id="ld-7-4">7 x 4</span><br>
+                <span id="ld-8-4">8 x 4</span><br>
+                <span id="ld-9-4">9 x 4</span><br>
+                <span id="ld-10-4">10 x 4</span><br>
+                <span id="ld-11-4">11 x 4</span><br>
+                <span id="ld-12-4">12 x 4</span><br>
+                <span id="ld-13-4">13 x 4</span><br>
+                <span id="ld-14-4">14 x 4</span><br>
+                <span id="ld-15-4">15 x 4</span><br>
+                <span id="ld-16-4">16 x 4</span><br>
+                <span id="ld-17-4">17 x 4</span><br>
+                <span id="ld-18-4">18 x 4</span><br>
+                <span id="ld-19-4">19 x 4</span><br>
+                <span id="ld-20-4">20 x 4</span><br>
+            </div>
+            <div class="col-2 ld-border-left">
+                5's<br>
+                <span id="ld-1-5">1 x 5</span><br>
+                <span id="ld-2-5">2 x 5</span><br>
+                <span id="ld-3-5">3 x 5</span><br>
+                <span id="ld-4-5">4 x 5</span><br>
+                <span id="ld-5-5">5 x 5</span><br>
+                <span id="ld-6-5">6 x 5</span><br>
+                <span id="ld-7-5">7 x 5</span><br>
+                <span id="ld-8-5">8 x 5</span><br>
+                <span id="ld-9-5">9 x 5</span><br>
+                <span id="ld-10-5">10 x 5</span><br>
+                <span id="ld-11-5">11 x 5</span><br>
+                <span id="ld-12-5">12 x 5</span><br>
+                <span id="ld-13-5">13 x 5</span><br>
+                <span id="ld-14-5">14 x 5</span><br>
+                <span id="ld-15-5">15 x 5</span><br>
+                <span id="ld-16-5">16 x 5</span><br>
+                <span id="ld-17-5">17 x 5</span><br>
+                <span id="ld-18-5">18 x 5</span><br>
+                <span id="ld-19-5">19 x 5</span><br>
+                <span id="ld-20-5">20 x 5</span><br>
+            </div>
+            <div class="col-2 ld-border-left">
+                6's<br>
+                <span id="ld-1-6">1 x 6</span><br>
+                <span id="ld-2-6">2 x 6</span><br>
+                <span id="ld-3-6">3 x 6</span><br>
+                <span id="ld-4-6">4 x 6</span><br>
+                <span id="ld-5-6">5 x 6</span><br>
+                <span id="ld-6-6">6 x 6</span><br>
+                <span id="ld-7-6">7 x 6</span><br>
+                <span id="ld-8-6">8 x 6</span><br>
+                <span id="ld-9-6">9 x 6</span><br>
+                <span id="ld-10-6">10 x 6</span><br>
+                <span id="ld-11-6">11 x 6</span><br>
+                <span id="ld-12-6">12 x 6</span><br>
+                <span id="ld-13-6">13 x 6</span><br>
+                <span id="ld-14-6">14 x 6</span><br>
+                <span id="ld-15-6">15 x 6</span><br>
+                <span id="ld-16-6">16 x 6</span><br>
+                <span id="ld-17-6">17 x 6</span><br>
+                <span id="ld-18-6">18 x 6</span><br>
+                <span id="ld-19-6">19 x 6</span><br>
+                <span id="ld-20-6">20 x 6</span><br>
+            </div>
+        </div>
+        <div class="row text-center mt-4 d-none" id="ld-add-call">
+            <div class="col-12">
+                <h6>Add Call</h6>
+            </div>
+            <div class="col-4">
+                <button class="btn btn-info ld-add-call-btn-step-one" id="ld-add-call-1s" onclick="addCallStepOne(this, 1)">1</button>
+            </div>
+            <div class="col-4">
+                <button class="btn btn-info ld-add-call-btn-step-one" id="ld-add-call-2s" onclick="addCallStepOne(this, 2)">2</button>
+            </div>
+            <div class="col-4">
+                <button class="btn btn-info ld-add-call-btn-step-one" id="ld-add-call-3s" onclick="addCallStepOne(this, 3)">3</button>
+            </div>
+            <div class="col-4">
+                <button class="btn btn-info ld-add-call-btn-step-one" id="ld-add-call-4s" onclick="addCallStepOne(this, 4)">4</button>
+            </div>
+            <div class="col-4">
+                <button class="btn btn-info ld-add-call-btn-step-one" id="ld-add-call-5s" onclick="addCallStepOne(this, 5)">5</button>
+            </div>
+            <div class="col-4">
+                <button class="btn btn-info ld-add-call-btn-step-one" id="ld-add-call-6s" onclick="addCallStepOne(this, 6)">6</button>
+            </div>
+            <div class="col-12">
+                <hr>
+            </div>
+            <div class="col-12">
+                <div class="row d-none" id="ld-add-call-step-two">
+                    <div class="col-3">
+                        <button class="btn btn-primary ld-add-call-btn-step-two" id="ld-add-call-1" onclick="addCallStepTwo(this, 1)">1</button>
+                    </div>
+                    <div class="col-3">
+                        <button class="btn btn-primary ld-add-call-btn-step-two" id="ld-add-call-2" onclick="addCallStepTwo(this, 2)">2</button>
+                    </div>
+                    <div class="col-3">
+                        <button class="btn btn-primary ld-add-call-btn-step-two" id="ld-add-call-3" onclick="addCallStepTwo(this, 3)">3</button>
+                    </div>
+                    <div class="col-3">
+                        <button class="btn btn-primary ld-add-call-btn-step-two" id="ld-add-call-4" onclick="addCallStepTwo(this, 4)">4</button>
+                    </div>
+                    <div class="col-3">
+                        <button class="btn btn-primary ld-add-call-btn-step-two" id="ld-add-call-5" onclick="addCallStepTwo(this, 5)">5</button>
+                    </div>
+                    <div class="col-3">
+                        <button class="btn btn-primary ld-add-call-btn-step-two" id="ld-add-call-6" onclick="addCallStepTwo(this, 6)">6</button>
+                    </div>
+                    <div class="col-3">
+                        <button class="btn btn-primary ld-add-call-btn-step-two" id="ld-add-call-7" onclick="addCallStepTwo(this, 7)">7</button>
+                    </div>
+                    <div class="col-3">
+                        <button class="btn btn-primary ld-add-call-btn-step-two" id="ld-add-call-8" onclick="addCallStepTwo(this, 8)">8</button>
+                    </div>
+                    <div class="col-3">
+                        <button class="btn btn-primary ld-add-call-btn-step-two" id="ld-add-call-9" onclick="addCallStepTwo(this, 9)">9</button>
+                    </div>
+                    <div class="col-3">
+                        <button class="btn btn-primary ld-add-call-btn-step-two" id="ld-add-call-10" onclick="addCallStepTwo(this, 10)">10</button>
+                    </div>
+                    <div class="col-3">
+                        <button class="btn btn-primary ld-add-call-btn-step-two" id="ld-add-call-11" onclick="addCallStepTwo(this, 11)">11</button>
+                    </div>
+                    <div class="col-3">
+                        <button class="btn btn-primary ld-add-call-btn-step-two" id="ld-add-call-12" onclick="addCallStepTwo(this, 12)">12</button>
+                    </div>
+                    <div class="col-3">
+                        <button class="btn btn-primary ld-add-call-btn-step-two" id="ld-add-call-13" onclick="addCallStepTwo(this, 13)">13</button>
+                    </div>
+                    <div class="col-3">
+                        <button class="btn btn-primary ld-add-call-btn-step-two" id="ld-add-call-14" onclick="addCallStepTwo(this, 14)">14</button>
+                    </div>
+                    <div class="col-3">
+                        <button class="btn btn-primary ld-add-call-btn-step-two" id="ld-add-call-15" onclick="addCallStepTwo(this, 15)">15</button>
+                    </div>
+                    <div class="col-3">
+                        <button class="btn btn-primary ld-add-call-btn-step-two" id="ld-add-call-16" onclick="addCallStepTwo(this, 16)">16</button>
+                    </div>
+                    <div class="col-3">
+                        <button class="btn btn-primary ld-add-call-btn-step-two" id="ld-add-call-17" onclick="addCallStepTwo(this, 17)">17</button>
+                    </div>
+                    <div class="col-3">
+                        <button class="btn btn-primary ld-add-call-btn-step-two" id="ld-add-call-18" onclick="addCallStepTwo(this, 18)">18</button>
+                    </div>
+                    <div class="col-3">
+                        <button class="btn btn-primary ld-add-call-btn-step-two" id="ld-add-call-19" onclick="addCallStepTwo(this, 19)">19</button>
+                    </div>
+                    <div class="col-3">
+                        <button class="btn btn-primary ld-add-call-btn-step-two" id="ld-add-call-20" onclick="addCallStepTwo(this, 20)">20</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        var ldCalls = {};
+        var maxCall = 20;
+
+        var currentCallStepOne = 1;
+
+        setupCallsStore();
+
+        function setupCallsStore() {
+            for (let i = 1; i <= 6; i++) {
+                ldCalls[i] = {};
+                for (let j = 1; j <= maxCall; j++) {
+                    ldCalls[i][j] = false;
+                }
+            }
+        }
+
+        function addCall() {
+            // Nav controls
+            $('#ld-add-call-btn')[0].classList.add('d-none');
+            $('#ld-cancel-call-btn')[0].classList.remove('d-none');
+
+            // Content buttons
+            $('#ld-calls')[0].classList.add('d-none');
+            $('#ld-add-call')[0].classList.remove('d-none');
+
+            // Clear buttons
+            $('#ld-add-call-step-two')[0].classList.add('d-none');
+            clearStepOne();
+        }
+
+        function cancelCall() {
+            // Nav controls
+            $('#ld-add-call-btn')[0].classList.remove('d-none');
+            $('#ld-cancel-call-btn')[0].classList.add('d-none');
+
+            // Content buttons
+            $('#ld-calls')[0].classList.remove('d-none');
+            $('#ld-add-call')[0].classList.add('d-none');
+        }
+
+        function addCallStepOne(btn, value) {
+            $('#ld-add-call-step-two')[0].classList.add('d-none');
+            clearStepOne();
+
+            currentCallStepOne = value;
+
+            let thisBtn = $(btn)[0];
+            thisBtn.classList.remove('btn-info');
+            thisBtn.classList.add('btn-success');
+            clearStepTwo();
+            blockStepTwo(value);
+
+            $('#ld-add-call-step-two')[0].classList.remove('d-none');
+        }
+
+        function addCallStepTwo(btn, value) {
+            console.log('submitting: ' + value + ' ' + currentCallStepOne + '\'s');
+
+            scoreTheBoard(value, currentCallStepOne);
+
+            cancelCall();
+        }
+
+        function blockStepTwo(stepOneValue) {
+            for(let i = 0; i <= maxCall; i++) {
+                if(ldCalls[stepOneValue][i] === true) {
+                    let btnToDisable = $('#ld-add-call-' + i);
+                    btnToDisable[0].classList.remove('btn-primary');
+                    btnToDisable[0].classList.add('btn-secondary');
+                    btnToDisable.attr("disabled", true);
+                }
+            }
+        }
+
+        function clearStepOne() {
+            for(let i = 1; i <= 6; i++) {
+                let btnToClear = $('#ld-add-call-' + i + 's')[0];
+                btnToClear.classList.add('btn-info');
+                btnToClear.classList.remove('btn-success');
+            }
+        }
+
+        function clearStepTwo() {
+            for(let i = 1; i <= 20; i++) {
+                let btnToClear = $('#ld-add-call-' + i);
+                btnToClear[0].classList.add('btn-primary');
+                btnToClear[0].classList.remove('btn-secondary');
+                btnToClear.attr("disabled", false);
+            }
+        }
+
+        function scoreTheBoard(numOfDice, diceValue) {
+            ldCalls[diceValue][numOfDice] = true;
+            $('#ld-' + numOfDice + '-' + diceValue)[0].classList.add('ld-taken');
+        }
+    </script>
+</body>
+</html>
